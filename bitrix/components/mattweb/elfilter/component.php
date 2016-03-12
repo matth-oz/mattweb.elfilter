@@ -94,7 +94,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["filter_send"])){
 		}		
 	}
 	
+	// массив для передачи в компонент новостей
 	$USER->SetParam('elfilter', $arrElementsFilter);
+	// массив текущих значений фильтра для отображения в форме
 	$USER->SetParam('curFilterParams', $_POST);
 }
 
