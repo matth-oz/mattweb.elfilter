@@ -1,4 +1,11 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+/** @var CBitrixComponent $this */
+/** @var array $arParams */
+/** @var array $arResult */
+/** @var string $componentPath */
+/** @var string $componentName */
+/** @var string $componentTemplate */
+/** @global CDatabase $DB */
 /**
 	Параметры:
 	IBLOCK_TYPE - тип инфоблока 
@@ -20,7 +27,21 @@ if(!CModule::IncludeModule('iblock')){
 global $USER;
 
 $arParams["IBLOCK_ID"] = intVal($arParams["IBLOCK_ID"]);
-$arParams["ACTION_URL"] = trim($arParams["ACTION_URL"])."?use_filter=y";
+
+/* 
+	если компонент выводящий результаты 
+	фильтра находится на той же странице - ACTION_URL не указываем 
+*/
+if(empty($arParams["ACTION_URL"])){
+	$arParams["ACTION_URL"] = $APPLICATION->GetCurUri()."?use_filter=y";
+}
+else{
+	$arParams["ACTION_URL"] = trim($arParams["ACTION_URL"])."?use_filter=y";	
+}
+
+/*для комплексного компонента учитываем номер секции*/
+$ccSectionID = (!empty($arParams['SECTION_ID'])) ? $arParams['SECTION_ID'] : "";
+
 
 $arResult = Array();
 $arResult["FIELDS"] = Array();
@@ -159,7 +180,8 @@ if(count($arParams["ARR_PROPERTIES"]) > 0)
 			$arSelect = Array("ID", $propcd);
 			
 			$arFilter = Array(
-				"IBLOCK_ID" => $arParams["IBLOCK_ID"], 
+				"IBLOCK_ID" => $arParams["IBLOCK_ID"],
+				"SECTION_ID" => $ccSectionID,				
 				"INCLUDE_SUBSECTION" => "Y"
 			);
 
@@ -174,7 +196,7 @@ if(count($arParams["ARR_PROPERTIES"]) > 0)
 			$arSelect = Array("ID","NAME");
 			// Add unique property values into the filter
 			$arFilter = Array(
-				"IBLOCK_ID" => $arProp["LNKD_IBLOCK_ID"], 
+				"IBLOCK_ID" => $arProp["LNKD_IBLOCK_ID"],
 				"INCLUDE_SUBSECTION" => "Y",
 				"ID" => $arpropvals,
 			);
@@ -232,7 +254,8 @@ if(count($arParams["ARR_PROPERTIES"]) > 0)
 			$arSelect = Array("ID", $propcd);
 			
 			$arFilter = Array(
-				"IBLOCK_ID" => $arParams["IBLOCK_ID"], 
+				"IBLOCK_ID" => $arParams["IBLOCK_ID"],
+				"SECTION_ID" => $ccSectionID,				
 				"INCLUDE_SUBSECTION" => "Y"
 			);
 
@@ -294,7 +317,8 @@ if(count($arParams["ARR_PROPERTIES"]) > 0)
 			$arSelect = Array("ID", $propcd);
 			
 			$arFilter = Array(
-				"IBLOCK_ID" => $arParams["IBLOCK_ID"], 
+				"IBLOCK_ID" => $arParams["IBLOCK_ID"],
+				"SECTION_ID" => $ccSectionID,				
 				"INCLUDE_SUBSECTION" => "Y"
 			);
 
@@ -483,7 +507,8 @@ if(count($arParams["ARR_PROPERTIES"]) > 0)
 			$arSelect = Array("ID", $propcd);
 			
 			$arFilter = Array(
-				"IBLOCK_ID" => $arParams["IBLOCK_ID"], 
+				"IBLOCK_ID" => $arParams["IBLOCK_ID"],
+				"SECTION_ID" => $ccSectionID,
 				"INCLUDE_SUBSECTION" => "Y"
 			);
 
