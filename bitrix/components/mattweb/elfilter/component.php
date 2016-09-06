@@ -40,7 +40,7 @@ else{
 }
 
 /*для комплексного компонента учитываем номер секции*/
-$ccSectionID = (!empty($arParams['SECTION_ID'])) ? $arParams['SECTION_ID'] : "";
+$ccSectionID = intVal($arParams['SECTION_ID']);
 
 
 $arResult = Array();
@@ -180,11 +180,12 @@ if(count($arParams["ARR_PROPERTIES"]) > 0)
 			$arSelect = Array("ID", $propcd);
 			
 			$arFilter = Array(
-				"IBLOCK_ID" => $arParams["IBLOCK_ID"],
-				"SECTION_ID" => $ccSectionID,				
+				"IBLOCK_ID" => $arParams["IBLOCK_ID"],				
 				"INCLUDE_SUBSECTION" => "Y"
 			);
-
+		
+			if(!empty($ccSectionID)) $arFilter["SECTION_ID"] = $ccSectionID;
+			
 			$res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 			while($ob = $res->GetNextElement()){
 				$arFlds = $ob->GetFields();
@@ -254,11 +255,12 @@ if(count($arParams["ARR_PROPERTIES"]) > 0)
 			$arSelect = Array("ID", $propcd);
 			
 			$arFilter = Array(
-				"IBLOCK_ID" => $arParams["IBLOCK_ID"],
-				"SECTION_ID" => $ccSectionID,				
+				"IBLOCK_ID" => $arParams["IBLOCK_ID"],								
 				"INCLUDE_SUBSECTION" => "Y"
 			);
-
+			
+			if(!empty($ccSectionID)) $arFilter["SECTION_ID"] = $ccSectionID;
+			
 			$res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 			while($ob = $res->GetNextElement()){
 				$arFlds = $ob->GetFields();
@@ -318,10 +320,11 @@ if(count($arParams["ARR_PROPERTIES"]) > 0)
 			
 			$arFilter = Array(
 				"IBLOCK_ID" => $arParams["IBLOCK_ID"],
-				"SECTION_ID" => $ccSectionID,				
 				"INCLUDE_SUBSECTION" => "Y"
 			);
-
+			
+			if(!empty($ccSectionID)) $arFilter["SECTION_ID"] = $ccSectionID;
+			
 			$res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 			while($ob = $res->GetNextElement()){
 				$arFlds = $ob->GetFields();
@@ -507,11 +510,12 @@ if(count($arParams["ARR_PROPERTIES"]) > 0)
 			$arSelect = Array("ID", $propcd);
 			
 			$arFilter = Array(
-				"IBLOCK_ID" => $arParams["IBLOCK_ID"],
-				"SECTION_ID" => $ccSectionID,
+				"IBLOCK_ID" => $arParams["IBLOCK_ID"],				
 				"INCLUDE_SUBSECTION" => "Y"
 			);
-
+			
+			if(!empty($ccSectionID)) $arFilter["SECTION_ID"] = $ccSectionID;
+			
 			$res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 			while($ob = $res->GetNextElement()){
 				$arFlds = $ob->GetFields();
